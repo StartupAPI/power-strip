@@ -13,6 +13,7 @@ describe("PowerStrip", () => {
   });
 
   it("Should read global configuration object");
+  it("Should allow API endpoint base URL configuration");
 });
 
 describe("CSS Theme Switcher", () => {
