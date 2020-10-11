@@ -6,7 +6,6 @@ export default class LoggedInPowerStrip extends Component {
         if (props.accounts && props.accounts.length > 1) {
             current_account = props.accounts.find(account => account.is_current);
         }
-        console.log(current_account);
 
         return (<ul class="navbar-nav">
             { current_account ? (<li class="nav-item dropdown">
