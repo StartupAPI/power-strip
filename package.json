@@ -9,6 +9,7 @@
   "scripts": {
     "test": "NODE_ENV=test jest",
     "build": "preact build --no-prerender --clean --template src/index.ejs --service-worker false",
+    "watch": "nodemon --watch src -e js,jsx,scss,ejs --exec npm run-script build",
     "serve": "preact serve",
     "dev": "preact watch --template src/index.ejs",
     "dist": "microbundle --entry src/index.js"
@@ -22,6 +23,7 @@
     "jest": "^21.2.1",
     "microbundle": "^0.6.0",
     "node-sass": "^4.5.3",
+    "nodemon": "^2.0.4",
     "preact-cli": "^2.0.2",
     "preact-render-to-string": "^3.7.0",
     "preact-widget-scripts": "^0.6.0",
