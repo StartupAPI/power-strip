@@ -5,7 +5,7 @@
   "source": "src/index.js",
   "scripts": {
     "test": "NODE_ENV=test jest",
-    "start": "webpack-dev-server --open --mode development",
+    "start": "webpack serve",
     "build": "webpack --mode production"
   },
   "keywords": [],
