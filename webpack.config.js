@@ -1,6 +1,8 @@
 const webpack = require('webpack');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 
+const config = require('config');
+
 module.exports = {
   module: {
     rules: [
@@ -37,3 +39,18 @@ module.exports = {
     })
   ]
 };
+
+if (typeof config.startupapiDevProxy !== 'undefined' && config.startupapiDevProxy) {
+  console.log(`[Startup API] Will proxy requests from '/users/ to ${config.startupapiDevProxy}`);
+
+  module.exports.devServer = {
+    proxy: {
+      '/users': {
+        target: config.startupapiDevProxy,
+        pathRewrite: {'^/users/' : '/'},
+        secure: false,
+        changeOrigin: true
+      }
+    }
+  };
+}
