@@ -23,6 +23,9 @@ module.exports = {
   resolve: {
     extensions: ['*', '.js', '.jsx']
   },
+  output: {
+    filename: 'power-strip.js'
+  },
   plugins: [
     new HtmlWebPackPlugin({
       template: "./src/index.html",
