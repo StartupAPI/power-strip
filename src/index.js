@@ -1,10 +1,9 @@
-let poly = require("preact-cli/lib/lib/webpack/polyfills");
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-import { h, render } from "preact";
-
-import thunkMiddleware from "redux-thunk";
-import {Provider, connect} from "preact-redux";
+import {Provider, connect} from 'react-redux'
 import {createStore, combineReducers, applyMiddleware} from "redux";
+import thunkMiddleware from "redux-thunk";
 
 import {identity, loadIdentity} from "./store/identity";
 import {accounts, loadAccounts} from "./store/accounts";
@@ -41,7 +40,7 @@ const ConnectedPowerStrip = connect(
 store.dispatch(loadIdentity());
 store.dispatch(loadAccounts());
 
-render(
+ReactDOM.render(
   <Provider store={store}>
     <ConnectedPowerStrip/>
   </Provider>,
