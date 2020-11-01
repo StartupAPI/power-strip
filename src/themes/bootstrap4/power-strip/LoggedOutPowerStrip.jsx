@@ -1,18 +1,16 @@
-import { h, Component } from "preact";
+import React from "react";
 
-export default class LoggedOutPowerStrip extends Component {
-    render(props) {
-        return (<ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href={props.signUpURL}>
-                    Sign Up
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href={props.logInURL}>
-                    Log In
-                </a>
-            </li>
-        </ul>);
-    };
+export default function LoggedOutPowerStrip(props) {
+    return (<ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href={props.signUpURL}>
+                Sign Up
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href={props.logInURL}>
+                Log In
+            </a>
+        </li>
+    </ul>);
 }
