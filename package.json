@@ -5,12 +5,17 @@
   "source": "src/index.js",
   "scripts": {
     "test": "NODE_ENV=test jest",
+    "build": "webpack --mode production",
     "watch": "nodemon --watch src -e js,jsx,scss,ejs --exec npm run-script build"
   },
   "keywords": [],
   "author": "Sergey Chernyshev <sergey.chernyshev@gmail.com>",
   "license": "BSD",
   "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-react": "^7.12.1",
+    "babel-loader": "^8.1.0",
     "eslint": "^4.5.0",
     "jest": "^21.2.1",
     "nodemon": "^2.0.4",
@@ -19,6 +24,8 @@
   },
   "dependencies": {
     "axios": "^0.20.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0"
   }
