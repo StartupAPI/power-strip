@@ -1,5 +1,4 @@
-import { h, Component } from "preact";
-// import "./style.scss";
+import { Component } from "react";
 
 export default class PowerStrip extends Component {
   render(props) {

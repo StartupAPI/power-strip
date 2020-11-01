@@ -1,4 +1,4 @@
-import { h, Component } from "preact";
+import { Component } from "react";
 
 export default class LoggedInPowerStrip extends Component {
     render(props) {
