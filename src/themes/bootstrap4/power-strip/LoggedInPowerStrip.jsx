@@ -1,40 +1,39 @@
 import React from "react";
 
-export default function LoggedInPowerStrip(props) {
-    let current_account;
-    if (props.accounts && props.accounts.length > 1) {
-        current_account = props.accounts.find(account => account.is_current);
-    }
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
+import Dropdown from 'react-bootstrap/Dropdown';
 
-    return (<ul class="navbar-nav">
-        { current_account ? (<li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+export default function LoggedInPowerStrip(props) {
+    let accountDropdown = null;
+    if (props.accounts && props.accounts.length > 1) {
+        const current_account = props.accounts.find(account => account.is_current);
+
+        accountDropdown = <Dropdown onSelect={props.accountChangeCallback}>
+            <Dropdown.Toggle variant="plain" id="account-dropdown">
                 {current_account.name}
-            </a>
-            <div class="dropdown-menu">
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
                 {props.accounts
                     .filter(account => !account.is_current)
                     .map(account => (
-                    <a class="dropdown-item" href="#">{account.name}</a>
+                    <Dropdown.Item eventKey={account.id}>{account.name}</Dropdown.Item>
                 ))}
-            </div>
-        </li>) : null}
-        { props.isAdmin ? (
-            <li class="nav-item">
-                <a class="nav-link" href={props.adminURL}>
-                    Admin
-                </a>
-            </li>
-        ) : null }
-        <li class="nav-item">
-            <a class="nav-link" href={props.editURL}>
-                {props.name}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href={props.logoutURL}>
-                Log Out
-            </a>
-        </li>
-    </ul>);
+            </Dropdown.Menu>
+        </Dropdown>
+    }
+
+    let adminLink = null;
+    if (props.isAdmin) {
+        adminLink = <Nav.Link href={props.adminURL}>Admin</Nav.Link>
+    }
+
+    return <Navbar>
+        <Nav>
+            {accountDropdown}
+            {adminLink}
+            <Nav.Link href={props.editURL}>{props.name}</Nav.Link>
+            <Nav.Link href={props.logoutURL}>Log Out</Nav.Link>
+        </Nav>
+    </Navbar>
 }
