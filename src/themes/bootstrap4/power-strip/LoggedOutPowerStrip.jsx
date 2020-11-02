@@ -1,16 +1,13 @@
 import React from "react";
 
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
+
 export default function LoggedOutPowerStrip(props) {
-    return (<ul class="navbar-nav">
-        <li class="nav-item">
-            <a class="nav-link" href={props.signUpURL}>
-                Sign Up
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href={props.logInURL}>
-                Log In
-            </a>
-        </li>
-    </ul>);
+    return <Navbar>
+        <Nav>
+            <Nav.Link href={props.signUpURL}>Sign Up</Nav.Link>
+            <Nav.Link href={props.logInURL}>Log In</Nav.Link>
+        </Nav>
+    </Navbar>
 }

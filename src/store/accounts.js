@@ -3,6 +3,15 @@ import axios from "axios";
 export const LOAD_ACCOUNTS = "LOAD_ACCOUNTS";
 export const ACCOUNTS_LOADED = "ACCOUNTS_LOADED";
 export const ACCOUNTS_UNKNOWN = "ACCOUNTS_UNKNOWN";
+export const SET_CURRENT_ACCOUNT = "SET_CURRENT_ACCOUNT";
+
+export function setCurrentAccountById(accountId) {
+    // @TODO: make a call to API to switch current account
+    return {
+        type: SET_CURRENT_ACCOUNT,
+        accountId
+    }
+}
 
 export function loadAccounts() {
     return dispatch => {
@@ -58,6 +67,13 @@ export function accounts(state, action) {
                 accounts: [],
                 accounts_loading: false,
                 accounts_initialized: true
+            });
+        case SET_CURRENT_ACCOUNT:
+            return Object.assign({}, state, {
+                accounts: state.accounts.map(account => {
+                    account.is_current = account.id === Number.parseInt(action.accountId);
+                    return account;
+                })
             });
         default:
             return state;
