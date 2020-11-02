@@ -10,14 +10,13 @@ export default function LoggedInPowerStrip(props) {
         const current_account = props.accounts.find(account => account.is_current);
 
         accountDropdown = <Dropdown onSelect={props.accountChangeCallback}>
-            <Dropdown.Toggle variant="plain" id="account-dropdown">
+            <Dropdown.Toggle variant="outline-secondary" id="account-dropdown">
                 {current_account.name}
             </Dropdown.Toggle>
             <Dropdown.Menu>
                 {props.accounts
-                    .filter(account => !account.is_current)
                     .map(account => (
-                    <Dropdown.Item eventKey={account.id}>{account.name}</Dropdown.Item>
+                    <Dropdown.Item eventKey={account.id} active={account.is_current}>{account.name}</Dropdown.Item>
                 ))}
             </Dropdown.Menu>
         </Dropdown>

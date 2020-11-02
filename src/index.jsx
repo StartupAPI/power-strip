@@ -45,9 +45,18 @@ const ConnectedPowerStrip = connect(
 store.dispatch(loadIdentity());
 store.dispatch(loadAccounts());
 
-ReactDOM.render(
-  <Provider store={store}>
-    <ConnectedPowerStrip/>
-  </Provider>,
-  document.getElementById('startupapi-power-strip')
-);
+const powerStrips = Array.from(document.querySelectorAll('.startupapi-power-strip'));
+const powerStripByID = document.getElementById('startupapi-power-strip');
+
+if (powerStripByID) {
+  powerStrips.push(powerStripByID);
+}
+
+powerStrips.forEach(element => {
+  ReactDOM.render(
+    <Provider store={store}>
+      <ConnectedPowerStrip/>
+    </Provider>,
+    element
+  );
+})
