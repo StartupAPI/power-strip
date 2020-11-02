@@ -1,7 +1,6 @@
 const webpack = require('webpack');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
-
-const config = require('config');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   module: {
@@ -39,18 +38,3 @@ module.exports = {
     })
   ]
 };
-
-if (typeof config.startupapiDevProxy !== 'undefined' && config.startupapiDevProxy) {
-  console.log(`[Startup API] Will proxy requests from '/users/ to ${config.startupapiDevProxy}`);
-
-  module.exports.devServer = {
-    proxy: {
-      '/users': {
-        target: config.startupapiDevProxy,
-        pathRewrite: {'^/users/' : '/'},
-        secure: false,
-        changeOrigin: true
-      }
-    }
-  };
-}
