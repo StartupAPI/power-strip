@@ -1,5 +1,3 @@
-import axios from "axios";
-
 export const LOAD_IDENTITY = "LOAD_IDENTITY";
 export const IDENTITY_LOADED = "IDENTITY_LOADED";
 export const IDENTITY_UNKNOWN = "IDENTITY_UNKNOWN";
@@ -10,20 +8,23 @@ export function loadIdentity() {
       type: LOAD_IDENTITY,
     });
 
-    axios
-      .get("/users/api.php?call=/startupapi/v1/user", {
-        responseType: "json",
+    return window
+      .fetch("/users/api.php?call=/startupapi/v1/user", {
+        method: "GET",
+        credentials: "same-origin",
       })
-      .then((response) => {
-        if (response.data.meta.success) {
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.meta.success) {
           return dispatch({
-            identity: response.data.result,
+            identity: data.result,
             type: IDENTITY_LOADED,
           });
+        } else {
+          return dispatch({
+            type: IDENTITY_UNKNOWN,
+          });
         }
-        return dispatch({
-          type: IDENTITY_UNKNOWN,
-        });
       })
       .catch(() =>
         dispatch({
