@@ -1,9 +1,9 @@
-import axios from 'axios';
+import axios from "axios";
 
-export const LOAD_ACCOUNTS = 'LOAD_ACCOUNTS';
-export const ACCOUNTS_LOADED = 'ACCOUNTS_LOADED';
-export const ACCOUNTS_UNKNOWN = 'ACCOUNTS_UNKNOWN';
-export const SET_CURRENT_ACCOUNT = 'SET_CURRENT_ACCOUNT';
+export const LOAD_ACCOUNTS = "LOAD_ACCOUNTS";
+export const ACCOUNTS_LOADED = "ACCOUNTS_LOADED";
+export const ACCOUNTS_UNKNOWN = "ACCOUNTS_UNKNOWN";
+export const SET_CURRENT_ACCOUNT = "SET_CURRENT_ACCOUNT";
 
 export function setCurrentAccountById(accountId) {
   // @TODO: make a call to API to switch current account
@@ -20,8 +20,8 @@ export function loadAccounts() {
     });
 
     axios
-      .get('/users/api.php?call=/startupapi/v1/accounts', {
-        responseType: 'json',
+      .get("/users/api.php?call=/startupapi/v1/accounts", {
+        responseType: "json",
       })
       .then((response) => {
         if (response.data.meta.success) {
@@ -33,14 +33,17 @@ export function loadAccounts() {
         return dispatch({
           type: ACCOUNTS_UNKNOWN,
         });
-      }).catch(() => dispatch({
-        type: ACCOUNTS_UNKNOWN,
-      }));
+      })
+      .catch(() =>
+        dispatch({
+          type: ACCOUNTS_UNKNOWN,
+        })
+      );
   };
 }
 
 export function accounts(state, action) {
-  if (typeof state === 'undefined') {
+  if (typeof state === "undefined") {
     return {
       accounts: [],
       accounts_loading: false,

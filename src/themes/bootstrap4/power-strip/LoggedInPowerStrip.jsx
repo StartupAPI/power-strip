@@ -1,49 +1,60 @@
 import React from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import Dropdown from 'react-bootstrap/Dropdown';
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
+import Dropdown from "react-bootstrap/Dropdown";
 
 LoggedInPowerStrip.propTypes = {
-    name: PropTypes.string,
-    accounts: PropTypes.array,
-    accountChangeCallback: PropTypes.func,
-    isAdmin: PropTypes.bool,
-    editURL: PropTypes.string,
-    logoutURL: PropTypes.string,
-    adminURL: PropTypes.string
+  name: PropTypes.string,
+  accounts: PropTypes.array,
+  accountChangeCallback: PropTypes.func,
+  isAdmin: PropTypes.bool,
+  editURL: PropTypes.string,
+  logoutURL: PropTypes.string,
+  adminURL: PropTypes.string,
 };
 
 export default function LoggedInPowerStrip(props) {
-    let accountDropdown = null;
-    if (props.accounts && props.accounts.length > 1) {
-        const current_account = props.accounts.find(account => account.is_current);
+  let accountDropdown = null;
+  if (props.accounts && props.accounts.length > 1) {
+    const current_account = props.accounts.find(
+      (account) => account.is_current
+    );
 
-        accountDropdown = <Dropdown onSelect={props.accountChangeCallback}>
-            <Dropdown.Toggle variant="outline-secondary" id="account-dropdown">
-                {current_account.name}
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-                {props.accounts
-                    .map(account => (
-                    <Dropdown.Item key={account.id} eventKey={account.id} active={account.is_current}>{account.name}</Dropdown.Item>
-                ))}
-            </Dropdown.Menu>
-        </Dropdown>
-    }
+    accountDropdown = (
+      <Dropdown onSelect={props.accountChangeCallback}>
+        <Dropdown.Toggle variant="outline-secondary" id="account-dropdown">
+          {current_account.name}
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
+          {props.accounts.map((account) => (
+            <Dropdown.Item
+              key={account.id}
+              eventKey={account.id}
+              active={account.is_current}
+            >
+              {account.name}
+            </Dropdown.Item>
+          ))}
+        </Dropdown.Menu>
+      </Dropdown>
+    );
+  }
 
-    let adminLink = null;
-    if (props.isAdmin) {
-        adminLink = <Nav.Link href={props.adminURL}>Admin</Nav.Link>
-    }
+  let adminLink = null;
+  if (props.isAdmin) {
+    adminLink = <Nav.Link href={props.adminURL}>Admin</Nav.Link>;
+  }
 
-    return <Navbar>
-        <Nav>
-            {accountDropdown}
-            {adminLink}
-            <Nav.Link href={props.editURL}>{props.name}</Nav.Link>
-            <Nav.Link href={props.logoutURL}>Log Out</Nav.Link>
-        </Nav>
+  return (
+    <Navbar>
+      <Nav>
+        {accountDropdown}
+        {adminLink}
+        <Nav.Link href={props.editURL}>{props.name}</Nav.Link>
+        <Nav.Link href={props.logoutURL}>Log Out</Nav.Link>
+      </Nav>
     </Navbar>
+  );
 }

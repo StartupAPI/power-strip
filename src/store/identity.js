@@ -1,8 +1,8 @@
-import axios from 'axios';
+import axios from "axios";
 
-export const LOAD_IDENTITY = 'LOAD_IDENTITY';
-export const IDENTITY_LOADED = 'IDENTITY_LOADED';
-export const IDENTITY_UNKNOWN = 'IDENTITY_UNKNOWN';
+export const LOAD_IDENTITY = "LOAD_IDENTITY";
+export const IDENTITY_LOADED = "IDENTITY_LOADED";
+export const IDENTITY_UNKNOWN = "IDENTITY_UNKNOWN";
 
 export function loadIdentity() {
   return (dispatch) => {
@@ -11,8 +11,8 @@ export function loadIdentity() {
     });
 
     axios
-      .get('/users/api.php?call=/startupapi/v1/user', {
-        responseType: 'json',
+      .get("/users/api.php?call=/startupapi/v1/user", {
+        responseType: "json",
       })
       .then((response) => {
         if (response.data.meta.success) {
@@ -24,14 +24,17 @@ export function loadIdentity() {
         return dispatch({
           type: IDENTITY_UNKNOWN,
         });
-      }).catch(() => dispatch({
-        type: IDENTITY_UNKNOWN,
-      }));
+      })
+      .catch(() =>
+        dispatch({
+          type: IDENTITY_UNKNOWN,
+        })
+      );
   };
 }
 
 export function identity(state, action) {
-  if (typeof state === 'undefined') {
+  if (typeof state === "undefined") {
     return {
       identity: {},
       identity_loading: false,

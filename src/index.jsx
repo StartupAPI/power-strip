@@ -1,18 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
-import { Provider, connect } from 'react-redux';
+import { Provider, connect } from "react-redux";
+import { createStore, combineReducers, applyMiddleware, compose } from "redux";
+import thunkMiddleware from "redux-thunk";
+
+import { identity, loadIdentity } from "./store/identity";
 import {
-  createStore, combineReducers, applyMiddleware, compose,
-} from 'redux';
-import thunkMiddleware from 'redux-thunk';
+  accounts,
+  loadAccounts,
+  setCurrentAccountById,
+} from "./store/accounts";
 
-import { identity, loadIdentity } from './store/identity';
-import { accounts, loadAccounts, setCurrentAccountById } from './store/accounts';
+import PowerStrip from "./components/power-strip";
 
-import PowerStrip from './components/power-strip';
-
-import theme from './themes/bootstrap4';
+import theme from "./themes/bootstrap4";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 /**
@@ -21,7 +23,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
  */
 const store = createStore(
   combineReducers({ identity, accounts }),
-  composeEnhancers(applyMiddleware(thunkMiddleware)),
+  composeEnhancers(applyMiddleware(thunkMiddleware))
 );
 
 const ConnectedPowerStrip = connect(
@@ -30,7 +32,7 @@ const ConnectedPowerStrip = connect(
     changeAccount: (id) => {
       dispatch(setCurrentAccountById(id));
     },
-  }),
+  })
 )(({ identity, accounts, changeAccount }) => (
   <PowerStrip
     identity={identity.identity}
@@ -47,8 +49,10 @@ const ConnectedPowerStrip = connect(
 store.dispatch(loadIdentity());
 store.dispatch(loadAccounts());
 
-const powerStrips = Array.from(document.querySelectorAll('.startupapi-power-strip'));
-const powerStripByID = document.getElementById('startupapi-power-strip');
+const powerStrips = Array.from(
+  document.querySelectorAll(".startupapi-power-strip")
+);
+const powerStripByID = document.getElementById("startupapi-power-strip");
 
 if (powerStripByID) {
   powerStrips.push(powerStripByID);
@@ -59,6 +63,6 @@ powerStrips.forEach((element) => {
     <Provider store={store}>
       <ConnectedPowerStrip />
     </Provider>,
-    element,
+    element
   );
 });

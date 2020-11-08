@@ -1,6 +1,7 @@
-const webpack = require('webpack');
+const webpack = require("webpack");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
 
 module.exports = {
   module: {
@@ -9,32 +10,32 @@ module.exports = {
         test: /\.(jsx?)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
-        }
+          loader: "babel-loader",
+        },
       },
       {
         test: /\.html$/,
         use: [
           {
-            loader: "html-loader"
-          }
-        ]
-      }
-    ]
+            loader: "html-loader",
+          },
+        ],
+      },
+    ],
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx']
+    extensions: ["*", ".js", ".jsx"],
   },
   output: {
-    filename: 'power-strip.js'
+    filename: "power-strip.js",
   },
   plugins: [
     new HtmlWebPackPlugin({
       template: "./src/index.html",
-      filename: "./index.html"
+      filename: "./index.html",
     }),
     new webpack.SourceMapDevToolPlugin({
-      filename: 'power-strip.js.map'
-    })
-  ]
+      filename: "power-strip.js.map",
+    }),
+  ],
 };
