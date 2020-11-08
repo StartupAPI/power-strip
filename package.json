@@ -8,8 +8,8 @@
     "test:updateSnapshots": "NODE_ENV=test jest --updateSnapshot",
     "start": "webpack serve --config webpack.dev.js",
     "build": "webpack --mode production --config webpack.prod.js",
-    "lint": "eslint src/**",
-    "lint:fix": "eslint --fix src/**"
+    "lint": "eslint src --ext .js,.jsx",
+    "lint:fix": "eslint --fix src --ext .js,.jsx"
   },
   "keywords": [],
   "author": "Sergey Chernyshev <sergey.chernyshev@gmail.com>",
