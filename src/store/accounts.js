@@ -12,34 +12,29 @@ export function setCurrentAccountById(accountId) {
 }
 
 export function loadAccounts() {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch({
       type: LOAD_ACCOUNTS,
     });
 
-    window
+    const data = await window
       .fetch("/users/api.php?call=/startupapi/v1/accounts", {
         method: "GET",
         credentials: "same-origin",
       })
       .then((response) => response.json())
-      .then((data) => {
-        if (data.meta.success) {
-          return dispatch({
-            accounts: data.result,
-            type: ACCOUNTS_LOADED,
-          });
-        } else {
-          return dispatch({
-            type: ACCOUNTS_UNKNOWN,
-          });
-        }
-      })
-      .catch(() =>
-        dispatch({
-          type: ACCOUNTS_UNKNOWN,
-        })
-      );
+      .catch(() => null);
+
+    if (data && data.meta && data.meta.success) {
+      return dispatch({
+        accounts: data.result,
+        type: ACCOUNTS_LOADED,
+      });
+    } else {
+      return dispatch({
+        type: ACCOUNTS_UNKNOWN,
+      });
+    }
   };
 }
 

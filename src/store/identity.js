@@ -3,34 +3,29 @@ export const IDENTITY_LOADED = "IDENTITY_LOADED";
 export const IDENTITY_UNKNOWN = "IDENTITY_UNKNOWN";
 
 export function loadIdentity() {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch({
       type: LOAD_IDENTITY,
     });
 
-    return window
+    const data = await window
       .fetch("/users/api.php?call=/startupapi/v1/user", {
         method: "GET",
         credentials: "same-origin",
       })
       .then((response) => response.json())
-      .then((data) => {
-        if (data.meta.success) {
-          return dispatch({
-            identity: data.result,
-            type: IDENTITY_LOADED,
-          });
-        } else {
-          return dispatch({
-            type: IDENTITY_UNKNOWN,
-          });
-        }
-      })
-      .catch(() =>
-        dispatch({
-          type: IDENTITY_UNKNOWN,
-        })
-      );
+      .catch(() => null);
+
+    if (data && data.meta && data.meta.success) {
+      return dispatch({
+        identity: data.result,
+        type: IDENTITY_LOADED,
+      });
+    } else {
+      return dispatch({
+        type: IDENTITY_UNKNOWN,
+      });
+    }
   };
 }
 
