@@ -1,8 +1,19 @@
 import React from "react";
+import PropTypes from 'prop-types';
 
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Dropdown from 'react-bootstrap/Dropdown';
+
+LoggedInPowerStrip.propTypes = {
+    name: PropTypes.string,
+    accounts: PropTypes.array,
+    accountChangeCallback: PropTypes.func,
+    isAdmin: PropTypes.bool,
+    editURL: PropTypes.string,
+    logoutURL: PropTypes.string,
+    adminURL: PropTypes.string
+};
 
 export default function LoggedInPowerStrip(props) {
     let accountDropdown = null;
@@ -16,7 +27,7 @@ export default function LoggedInPowerStrip(props) {
             <Dropdown.Menu>
                 {props.accounts
                     .map(account => (
-                    <Dropdown.Item eventKey={account.id} active={account.is_current}>{account.name}</Dropdown.Item>
+                    <Dropdown.Item key={account.id} eventKey={account.id} active={account.is_current}>{account.name}</Dropdown.Item>
                 ))}
             </Dropdown.Menu>
         </Dropdown>

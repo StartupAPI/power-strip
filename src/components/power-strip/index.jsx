@@ -1,7 +1,5 @@
 import React from "react";
 
-import { setCurrentAccountById } from '../../store/accounts';
-
 export default function PowerStrip(props) {
   let startupAPIRoot = props.startupapiroot || '/users/';
 
