@@ -1,12 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import {Provider, connect} from 'react-redux'
-import {createStore, combineReducers, applyMiddleware, compose} from "redux";
-import thunkMiddleware from "redux-thunk";
+import { Provider, connect } from 'react-redux';
+import {
+  createStore, combineReducers, applyMiddleware, compose,
+} from 'redux';
+import thunkMiddleware from 'redux-thunk';
 
-import {identity, loadIdentity} from "./store/identity";
-import {accounts, loadAccounts, setCurrentAccountById} from "./store/accounts";
+import { identity, loadIdentity } from './store/identity';
+import { accounts, loadAccounts, setCurrentAccountById } from './store/accounts';
+
+import PowerStrip from './components/power-strip';
+
+import theme from './themes/bootstrap4';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 /**
@@ -14,22 +20,18 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
  * @type Store
  */
 const store = createStore(
-  combineReducers({identity, accounts}),
-  composeEnhancers(applyMiddleware(thunkMiddleware))
+  combineReducers({ identity, accounts }),
+  composeEnhancers(applyMiddleware(thunkMiddleware)),
 );
 
-import PowerStrip from "./components/power-strip";
-
-import theme from './themes/bootstrap4';
-
 const ConnectedPowerStrip = connect(
-  state => state,
-  dispatch => ({
-    changeAccount: id => {
-      dispatch(setCurrentAccountById(id))
-    }
-  })
-)( ({ identity, accounts, changeAccount }) => (
+  (state) => state,
+  (dispatch) => ({
+    changeAccount: (id) => {
+      dispatch(setCurrentAccountById(id));
+    },
+  }),
+)(({ identity, accounts, changeAccount }) => (
   <PowerStrip
     identity={identity.identity}
     identityLoading={identity.identity_loading}
@@ -52,11 +54,11 @@ if (powerStripByID) {
   powerStrips.push(powerStripByID);
 }
 
-powerStrips.forEach(element => {
+powerStrips.forEach((element) => {
   ReactDOM.render(
     <Provider store={store}>
-      <ConnectedPowerStrip/>
+      <ConnectedPowerStrip />
     </Provider>,
-    element
+    element,
   );
-})
+});
