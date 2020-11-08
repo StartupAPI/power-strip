@@ -1,5 +1,3 @@
-import axios from "axios";
-
 export const LOAD_ACCOUNTS = "LOAD_ACCOUNTS";
 export const ACCOUNTS_LOADED = "ACCOUNTS_LOADED";
 export const ACCOUNTS_UNKNOWN = "ACCOUNTS_UNKNOWN";
@@ -19,20 +17,23 @@ export function loadAccounts() {
       type: LOAD_ACCOUNTS,
     });
 
-    axios
-      .get("/users/api.php?call=/startupapi/v1/accounts", {
-        responseType: "json",
+    window
+      .fetch("/users/api.php?call=/startupapi/v1/accounts", {
+        method: "GET",
+        credentials: "same-origin",
       })
-      .then((response) => {
-        if (response.data.meta.success) {
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.meta.success) {
           return dispatch({
-            accounts: response.data.result,
+            accounts: data.result,
             type: ACCOUNTS_LOADED,
           });
+        } else {
+          return dispatch({
+            type: ACCOUNTS_UNKNOWN,
+          });
         }
-        return dispatch({
-          type: ACCOUNTS_UNKNOWN,
-        });
       })
       .catch(() =>
         dispatch({
