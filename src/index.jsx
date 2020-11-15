@@ -33,6 +33,11 @@ const ConnectedPowerStrip = connect(
   (state) => state,
   (dispatch) => ({
     changeAccount: (id) => {
+      // perform page redirect until react SPA can fully handle account update without it
+      window.location.href = `/users/change_account.php?return=${window.encodeURIComponent(
+        window.location.href
+      )}&account=${id}`;
+      // update redux store with new account info
       dispatch(setCurrentAccountById(id));
     },
   })
