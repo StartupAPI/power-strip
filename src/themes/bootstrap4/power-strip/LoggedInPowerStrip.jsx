@@ -50,8 +50,8 @@ export default function LoggedInPowerStrip(props) {
   return (
     <Navbar>
       <Nav>
-        {accountDropdown}
         {adminLink}
+        {accountDropdown}
         <Nav.Link href={props.editURL}>{props.name}</Nav.Link>
         <Nav.Link href={props.logoutURL}>Log Out</Nav.Link>
       </Nav>
