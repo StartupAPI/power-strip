@@ -4,6 +4,9 @@ import PropTypes from "prop-types";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Badge from "react-bootstrap/Badge";
 
 LoggedInPowerStrip.propTypes = {
   name: PropTypes.string,
@@ -15,30 +18,47 @@ LoggedInPowerStrip.propTypes = {
   adminURL: PropTypes.string,
 };
 
+function formatAccountTitle(account, plan) {
+  if (plan) {
+    return (
+      <span>
+        {account.name}{" "}
+        <Badge variant="secondary" title={plan.description}>
+          {plan.name}
+        </Badge>
+      </span>
+    );
+  } else {
+    return account.name;
+  }
+}
+
 export default function LoggedInPowerStrip(props) {
   let accountDropdown = null;
   if (props.accounts && props.accounts.length > 1) {
-    const current_account = props.accounts.find(
-      (account) => account.is_current
-    );
+    const currentAccount = props.accounts.find((account) => account.is_current);
+
+    const title = formatAccountTitle(currentAccount, currentAccount.plan);
 
     accountDropdown = (
-      <Dropdown onSelect={props.accountChangeCallback}>
-        <Dropdown.Toggle variant="outline-secondary" id="account-dropdown">
-          {current_account.name}
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-          {props.accounts.map((account) => (
-            <Dropdown.Item
-              key={account.id}
-              eventKey={account.id}
-              active={account.is_current}
-            >
-              {account.name}
-            </Dropdown.Item>
-          ))}
-        </Dropdown.Menu>
-      </Dropdown>
+      <DropdownButton
+        as={ButtonGroup}
+        id="startupapi-account-dropdown"
+        size="sm"
+        variant="outline-secondary"
+        title={title}
+        onSelect={props.accountChangeCallback}
+      >
+        {props.accounts.map((account) => (
+          <Dropdown.Item
+            key={account.id}
+            eventKey={account.id}
+            active={account.is_current}
+          >
+            {formatAccountTitle(account, account.plan)}
+          </Dropdown.Item>
+        ))}
+      </DropdownButton>
     );
   }
 
