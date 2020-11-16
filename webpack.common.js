@@ -10,10 +10,14 @@ module.exports = {
       },
     ],
   },
+  entry: {
+    bootstrap4: "./src/widget-bootstrap4.js",
+    plain: "./src/widget-plain.js",
+  },
   resolve: {
     extensions: ["*", ".js", ".jsx"],
   },
   output: {
-    filename: "power-strip.js",
+    filename: "power-strip-[name].js",
   },
 };

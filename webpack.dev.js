@@ -26,16 +26,18 @@ let webpackConfig = merge(common, {
     new HtmlWebPackPlugin({
       template: "./src/index.html",
       filename: "./index.html",
+      chunks: [],
     }),
     new HtmlWebPackPlugin({
       template: "./src/index-bootstrap4.html",
       filename: "./index-bootstrap4.html",
+      chunks: ["bootstrap4"],
     }),
     new HtmlWebPackPlugin({
       template: "./src/index-plain.html",
       filename: "./index-plain.html",
+      chunks: ["plain"],
     }),
-    new BundleAnalyzerPlugin(),
   ],
 });
 

@@ -17,20 +17,9 @@ import {
 
 import PowerStrip from "./components/power-strip";
 
-import plain from "./themes/plain";
-import bootstrap4 from "./themes/bootstrap4";
-
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-/**
- * Redux store
- * @type Store
- */
-const store = createStore(
-  combineReducers({ identity, accounts }),
-  composeEnhancers(applyMiddleware(thunkMiddleware))
-);
 
-const getConnectedPowerStrip = (theme) =>
+export const getPowerStrip = (theme) =>
   connect(
     (state) => state,
     (dispatch) => ({
@@ -56,33 +45,34 @@ const getConnectedPowerStrip = (theme) =>
     />
   ));
 
-store.dispatch(loadIdentity());
-store.dispatch(loadAccounts());
-
-const powerStrips = Array.from(
-  document.querySelectorAll(".startupapi-power-strip")
-);
-const powerStripByID = document.getElementById("startupapi-power-strip");
-
-if (powerStripByID) {
-  powerStrips.push(powerStripByID);
-}
-
-const powerStripThemes = {
-  bootstrap4: getConnectedPowerStrip(bootstrap4),
-  plain: getConnectedPowerStrip(plain),
-};
-
-powerStrips.forEach((element) => {
-  const ConnectedPowerStrip =
-    powerStripThemes[element.dataset["theme"] || "bootstrap4"];
-
-  ReactDOM.render(
-    <Provider store={store}>
-      <ConnectedPowerStrip />
-    </Provider>,
-    element
+export const attachWidget = (ConnectedPowerStrip) => {
+  /**
+   * Redux store
+   * @type Store
+   */
+  const store = createStore(
+    combineReducers({ identity, accounts }),
+    composeEnhancers(applyMiddleware(thunkMiddleware))
   );
-});
 
-console.log("Testing Source Maps!!!");
+  store.dispatch(loadIdentity());
+  store.dispatch(loadAccounts());
+
+  const powerStrips = Array.from(
+    document.querySelectorAll(".startupapi-power-strip")
+  );
+  const powerStripByID = document.getElementById("startupapi-power-strip");
+
+  if (powerStripByID) {
+    powerStrips.push(powerStripByID);
+  }
+
+  powerStrips.forEach((element) => {
+    ReactDOM.render(
+      <Provider store={store}>
+        <ConnectedPowerStrip />
+      </Provider>,
+      element
+    );
+  });
+};
