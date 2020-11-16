@@ -17,7 +17,8 @@ import {
 
 import PowerStrip from "./components/power-strip";
 
-import theme from "./themes/bootstrap4";
+import plain from "./themes/plain";
+import bootstrap4 from "./themes/bootstrap4";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 /**
@@ -29,30 +30,31 @@ const store = createStore(
   composeEnhancers(applyMiddleware(thunkMiddleware))
 );
 
-const ConnectedPowerStrip = connect(
-  (state) => state,
-  (dispatch) => ({
-    changeAccount: (id) => {
-      // perform page redirect until react SPA can fully handle account update without it
-      window.location.href = `/users/change_account.php?return=${window.encodeURIComponent(
-        window.location.href
-      )}&account=${id}`;
-      // update redux store with new account info
-      dispatch(setCurrentAccountById(id));
-    },
-  })
-)(({ identity, accounts, changeAccount }) => (
-  <PowerStrip
-    identity={identity.identity}
-    identityLoading={identity.identity_loading}
-    identityInitialized={identity.identity_initialized}
-    accounts={accounts.accounts}
-    accountsLoading={accounts.accounts_loading}
-    accountsInitialized={accounts.accounts_initialized}
-    accountChangeCallback={changeAccount}
-    theme={theme}
-  />
-));
+const getConnectedPowerStrip = (theme) =>
+  connect(
+    (state) => state,
+    (dispatch) => ({
+      changeAccount: (id) => {
+        // perform page redirect until react SPA can fully handle account update without it
+        window.location.href = `/users/change_account.php?return=${window.encodeURIComponent(
+          window.location.href
+        )}&account=${id}`;
+        // update redux store with new account info
+        dispatch(setCurrentAccountById(id));
+      },
+    })
+  )(({ identity, accounts, changeAccount }) => (
+    <PowerStrip
+      identity={identity.identity}
+      identityLoading={identity.identity_loading}
+      identityInitialized={identity.identity_initialized}
+      accounts={accounts.accounts}
+      accountsLoading={accounts.accounts_loading}
+      accountsInitialized={accounts.accounts_initialized}
+      accountChangeCallback={changeAccount}
+      theme={theme}
+    />
+  ));
 
 store.dispatch(loadIdentity());
 store.dispatch(loadAccounts());
@@ -66,7 +68,15 @@ if (powerStripByID) {
   powerStrips.push(powerStripByID);
 }
 
+const powerStripThemes = {
+  bootstrap4: getConnectedPowerStrip(bootstrap4),
+  plain: getConnectedPowerStrip(plain),
+};
+
 powerStrips.forEach((element) => {
+  const ConnectedPowerStrip =
+    powerStripThemes[element.dataset["theme"] || "bootstrap4"];
+
   ReactDOM.render(
     <Provider store={store}>
       <ConnectedPowerStrip />

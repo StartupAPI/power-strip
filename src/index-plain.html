@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Startup API Power Strip Example page - Plain theme</title>
+  </head>
+  <body>
+    <!-- PLAIN NAVBAR -->
+    <style>
+      ul {
+        padding-left: 0;
+      }
+
+      li ul {
+        list-style-type: none;
+        padding-left: 0;
+      }
+
+      li {
+        display: inline-block;
+      }
+
+      li::after {
+        display: inline-block;
+        color: #000;
+        content: "|";
+        font-size: 80%;
+        font-weight: bold;
+        padding: 0 3px;
+      }
+    </style>
+
+    <nav class="plain-theme-navbar">
+      <h1>
+        <a class="navbar-brand" href="/"> Power Strip</a> Plain Theme Example
+        Page
+      </h1>
+      <span class="startupapi-power-strip" data-theme="plain"></span>
+    </nav>
+
+    <!-- PLAIN NAVBAR END -->
+  </body>
+</html>
