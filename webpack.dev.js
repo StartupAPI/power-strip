@@ -23,9 +23,6 @@ let webpackConfig = merge(common, {
       },
     ],
   },
-  output: {
-    publicPath: "/assets/",
-  },
   plugins: [
     new HtmlWebPackPlugin({
       template: "./src/index.html",
