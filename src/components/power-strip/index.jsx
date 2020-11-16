@@ -6,20 +6,13 @@ export default function PowerStrip(props) {
   const LoggedInPowerStrip = props.theme.LoggedInPowerStrip;
   const LoggedOutPowerStrip = props.theme.LoggedOutPowerStrip;
 
-  let accountsProps = {};
-  if (props.accountsInitialized) {
-    accountsProps = {
-      accounts: props.accounts,
-    };
-  }
-
   // do not show a power strip until identity is initialized
   let powerStrip = null;
-  if (props.identityInitialized) {
+  if (props.identityInitialized && props.accountsInitialized) {
     if (props.identity.name) {
       powerStrip = (
         <LoggedInPowerStrip
-          {...accountsProps}
+          accounts={props.accounts}
           name={props.identity.name}
           editURL={`${startupAPIRoot}edit.php`}
           logoutURL={`${startupAPIRoot}logout.php`}

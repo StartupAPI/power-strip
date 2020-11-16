@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
@@ -9,13 +8,13 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Badge from "react-bootstrap/Badge";
 
 LoggedInPowerStrip.propTypes = {
-  name: PropTypes.string,
-  accounts: PropTypes.array,
-  accountChangeCallback: PropTypes.func,
-  isAdmin: PropTypes.bool,
-  editURL: PropTypes.string,
-  logoutURL: PropTypes.string,
-  adminURL: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  accounts: PropTypes.array.isRequired,
+  accountChangeCallback: PropTypes.func.isRequired,
+  isAdmin: PropTypes.bool.isRequired,
+  editURL: PropTypes.string.isRequired,
+  logoutURL: PropTypes.string.isRequired,
+  adminURL: PropTypes.string.isRequired,
 };
 
 function formatAccountTitle(account, plan) {
@@ -35,7 +34,7 @@ function formatAccountTitle(account, plan) {
 
 export default function LoggedInPowerStrip(props) {
   let accountDropdown = null;
-  if (props.accounts && props.accounts.length > 1) {
+  if (props.accounts.length > 1) {
     const currentAccount = props.accounts.find((account) => account.is_current);
 
     const title = formatAccountTitle(currentAccount, currentAccount.plan);
@@ -68,13 +67,11 @@ export default function LoggedInPowerStrip(props) {
   }
 
   return (
-    <Navbar>
-      <Nav>
-        {adminLink}
-        {accountDropdown}
-        <Nav.Link href={props.editURL}>{props.name}</Nav.Link>
-        <Nav.Link href={props.logoutURL}>Log Out</Nav.Link>
-      </Nav>
-    </Navbar>
+    <nav className="navbar-nav">
+      {adminLink}
+      {accountDropdown}
+      <Nav.Link href={props.editURL}>{props.name}</Nav.Link>
+      <Nav.Link href={props.logoutURL}>Log Out</Nav.Link>
+    </nav>
   );
 }

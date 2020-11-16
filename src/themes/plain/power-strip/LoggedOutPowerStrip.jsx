@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 
 LoggedOutPowerStrip.propTypes = {
-  signUpURL: PropTypes.string,
-  logInURL: PropTypes.string,
+  signUpURL: PropTypes.string.isRequired,
+  logInURL: PropTypes.string.isRequired,
 };
 
 export default function LoggedOutPowerStrip(props) {
