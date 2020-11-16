@@ -34,6 +34,14 @@ module.exports = {
       template: "./src/index.html",
       filename: "./index.html",
     }),
+    new HtmlWebPackPlugin({
+      template: "./src/index-bootstrap4.html",
+      filename: "./index-bootstrap4.html",
+    }),
+    new HtmlWebPackPlugin({
+      template: "./src/index-plain.html",
+      filename: "./index-plain.html",
+    }),
     new webpack.SourceMapDevToolPlugin({
       filename: "power-strip.js.map",
     }),
