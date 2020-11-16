@@ -1,5 +1,3 @@
-const webpack = require("webpack");
-
 const { merge } = require("webpack-merge");
 const common = require("./webpack.common.js");
 
@@ -11,6 +9,7 @@ const config = require("config");
 
 let webpackConfig = merge(common, {
   mode: "development",
+  devtool: "eval-source-map",
   module: {
     rules: [
       {
@@ -35,9 +34,6 @@ let webpackConfig = merge(common, {
     new HtmlWebPackPlugin({
       template: "./src/index-plain.html",
       filename: "./index-plain.html",
-    }),
-    new webpack.SourceMapDevToolPlugin({
-      filename: "power-strip.js.map",
     }),
     new BundleAnalyzerPlugin(),
   ],

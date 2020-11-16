@@ -84,3 +84,5 @@ powerStrips.forEach((element) => {
     element
   );
 });
+
+console.log("Testing Source Maps!!!");

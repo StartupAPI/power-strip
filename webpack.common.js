@@ -1,5 +1,3 @@
-const webpack = require("webpack");
-
 module.exports = {
   module: {
     rules: [
@@ -18,9 +16,4 @@ module.exports = {
   output: {
     filename: "power-strip.js",
   },
-  plugins: [
-    new webpack.SourceMapDevToolPlugin({
-      filename: "power-strip.js.map",
-    }),
-  ],
 };
