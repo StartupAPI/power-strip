@@ -1,6 +1,6 @@
 {
-  "name": "@startupapi/power-strip",
-  "version": "0.2.0",
+  "name": "@startup-api/react-power-strip",
+  "version": "0.3.0",
   "description": "Startup API Power Strip JS widget and components",
   "source": "src/index.js",
   "scripts": {
