@@ -10,6 +10,9 @@ const config = require("config");
 let webpackConfig = merge(common, {
   mode: "development",
   devtool: "eval-source-map",
+  entry: {
+    reactsample: "./src/sample-react-app.jsx",
+  },
   module: {
     rules: [
       {
@@ -37,6 +40,11 @@ let webpackConfig = merge(common, {
       template: "./src/index-plain.html",
       filename: "./index-plain.html",
       chunks: ["plain"],
+    }),
+    new HtmlWebPackPlugin({
+      template: "./src/index-reactsample.html",
+      filename: "./index-reactsample.html",
+      chunks: ["reactsample"],
     }),
   ],
 });

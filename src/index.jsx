@@ -19,8 +19,30 @@ import PowerStrip from "./components/power-strip";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-export const getPowerStrip = (theme) =>
-  connect(
+let store;
+
+const getStore = () => {
+  if (store) {
+    return store;
+  }
+
+  /**
+   * Redux store
+   * @type Store
+   */
+  store = createStore(
+    combineReducers({ identity, accounts }),
+    composeEnhancers(applyMiddleware(thunkMiddleware))
+  );
+
+  store.dispatch(loadIdentity());
+  store.dispatch(loadAccounts());
+
+  return store;
+};
+
+export const getPowerStrip = (theme) => {
+  const ConnectedPowerStrip = connect(
     (state) => state,
     (dispatch) => ({
       changeAccount: (id) => {
@@ -45,19 +67,14 @@ export const getPowerStrip = (theme) =>
     />
   ));
 
-export const attachWidget = (ConnectedPowerStrip) => {
-  /**
-   * Redux store
-   * @type Store
-   */
-  const store = createStore(
-    combineReducers({ identity, accounts }),
-    composeEnhancers(applyMiddleware(thunkMiddleware))
+  return (
+    <Provider store={getStore()}>
+      <ConnectedPowerStrip />
+    </Provider>
   );
+};
 
-  store.dispatch(loadIdentity());
-  store.dispatch(loadAccounts());
-
+export const attachWidget = (powerStrip) => {
   const powerStrips = Array.from(
     document.querySelectorAll(".startupapi-power-strip")
   );
@@ -68,11 +85,6 @@ export const attachWidget = (ConnectedPowerStrip) => {
   }
 
   powerStrips.forEach((element) => {
-    ReactDOM.render(
-      <Provider store={store}>
-        <ConnectedPowerStrip />
-      </Provider>,
-      element
-    );
+    ReactDOM.render(powerStrip, element);
   });
 };
